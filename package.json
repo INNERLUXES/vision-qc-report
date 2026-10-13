@@ -1,0 +1,51 @@
+{
+  "name": "vision-qc-report",
+  "version": "1.0.0",
+  "description": "Checks a vision inspection station against a labelled set of parts. Reads the pass and fail results of the station and the labels people gave the same parts (two CSV or TSV tables, never an image), and reports the escape rate, the false reject rate, a confusion matrix for each defect type, the parts where repeated runs disagreed and, if asked, the rates at every score threshold, so a station can be accepted on numbers and limits a pipeline can fail on. Exact decimal arithmetic. The numbers are only as good as the labels and the sample; it is not a measurement system analysis and not a certification. Contacts nothing over the network, reads no clock, writes nothing. Text, markdown, JSON, SARIF and JUnit output, no dependencies.",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "bin": {
+    "vision-qc-report": "bin/vision-qc-report.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "docs",
+    "examples",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test \"test/*.test.js\"",
+    "test:coverage": "node --test --experimental-test-coverage \"test/*.test.js\"",
+    "check": "node tools/check.mjs",
+    "example": "node tools/example.mjs"
+  },
+  "keywords": [
+    "machine-vision",
+    "computer-vision",
+    "quality-control",
+    "inspection",
+    "manufacturing",
+    "acceptance-testing",
+    "confusion-matrix",
+    "csv",
+    "junit",
+    "sarif",
+    "cli",
+    "nodejs"
+  ],
+  "author": "INNERLUXES <info@innerluxes.dev>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/INNERLUXES/vision-qc-report.git"
+  },
+  "homepage": "https://innerluxes.dev/image-analysis/machine-vision"
+}
