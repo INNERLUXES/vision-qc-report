@@ -1,0 +1,202 @@
+vision-qc-report: examples/bad/labels.csv + examples/bad/results.csv
+labels: examples/bad/labels.csv (CSV, 30 lines, 1,023 bytes)
+results: examples/bad/results.csv (CSV, 68 lines, 1,839 bytes)
+parts: 22 labelled (10 good, 11 defect, 1 tied), 20 measured (10 good, 10 defect)
+runs: 58 runs of the measured parts; 67 rows in the results file, 5 left out
+findings: 27 (22 error, 5 warning)
+
+Rates
+
+  measure                              count     rate    limit
+  escape rate, per run                 8 of 28   28.57%  at most 2%
+  escape rate, majority verdict        3 of 10   30.00%  at most 2%
+  false reject rate, per run           8 of 30   26.67%  at most 5%
+  false reject rate, majority verdict  3 of 10   30.00%  at most 5%
+  repeatability                        13 of 20  65.00%  at least 95%
+
+A rate is a count over a count, shown as a percent with two decimals and compared with its limit exactly. Per run counts every result row; the majority verdict counts each part once, and a tie between pass and fail counts against the station. Repeatability is the share of the parts with more than one run whose runs all gave the same verdict.
+
+Defect types (5)
+
+  defect type   parts  runs  detected  detection rate  named as labelled
+  burr          2      5     4 of 5    80.00%          0 of 5 (0.00%)
+  dent          2      5     4 of 5    80.00%          0 of 5 (0.00%)
+  missing-hole  2      6     4 of 6    66.67%          0 of 6 (0.00%)
+  scratch       3      9     5 of 9    55.56%          0 of 9 (0.00%)
+  (no type)     1      3     3 of 3    100.00%         n/a
+
+Confusion matrix, in runs: the rows are what the labels say, the columns what the station reported
+
+  labelled \ reported  burr  dent  missing-hole  scratch  (not named)  passed
+  burr                 0     0     0             0        4            1
+  dent                 0     0     0             0        4            1
+  missing-hole         0     0     0             0        4            2
+  scratch              0     0     0             0        5            4
+  (no type)            0     0     0             0        3            0
+  (good part)          0     0     0             0        8            22
+
+Parts where the runs disagreed (7 of 20 parts with more than one run)
+
+  B-G05 (good): run 1 fail, run 2 fail, run 3 pass  [examples/bad/results.csv:14]
+  B-G06 (good): run 1 fail, run 2 pass, run 3 fail  [examples/bad/results.csv:17]
+  B-G07 (good): run 1 pass, run 2 pass, run 3 fail  [examples/bad/results.csv:20]
+  B-D03 (defect, dent): run 1 fail, run 2 fail, run 3 pass  [examples/bad/results.csv:42]
+  B-D05 (defect, burr): run 1 fail, run 3 pass  [examples/bad/results.csv:47]
+  B-D07 (defect, missing-hole): run 1 pass, run 2 fail, run 3 pass  [examples/bad/results.csv:52]
+  B-D10 (defect, scratch): run 1 fail, run 2 fail, run 3 pass  [examples/bad/results.csv:61]
+
+Stations (2)
+
+  station  escape rate, per run  false reject rate, per run
+  cell-1   4 of 14 (28.57%)      5 of 15 (33.33%)
+  cell-2   4 of 14 (28.57%)      3 of 15 (20.00%)
+
+Acceptance limits
+
+  limit                                status  detail
+  escape rate at most 2 percent        fail    28.57 percent per run (8 of 28 runs of defect parts passed), 30.00 percent by majority verdict (3 of 10 defect parts)
+  false reject rate at most 5 percent  fail    26.67 percent per run (8 of 30 runs of good parts failed), 30.00 percent by majority verdict (3 of 10 good parts)
+  repeatability at least 95 percent    fail    65.00 percent (13 of 20 parts with more than one run gave the same verdict every time)
+
+Checks (22)
+
+  check                      level    kind    findings
+  file-unreadable            error    file    0
+  column-missing             warning  file    1
+  column-unknown             error    file    2
+  column-duplicate           error    file    2
+  row-malformed              error    record  2
+  cell-missing               error    record  2
+  label-invalid              error    record  1
+  verdict-invalid            error    record  1
+  run-invalid                error    record  1
+  score-invalid              error    record  1
+  secret-in-file             error    record  1
+  defect-type-on-good        error    record  1
+  defect-type-missing        warning  record  1
+  label-duplicate            error    part    1
+  label-conflict             warning  part    2
+  run-sequence               error    part    2
+  result-without-label       error    part    1
+  label-without-result       error    part    1
+  escape-above-limit         error    metric  1
+  false-reject-above-limit   error    metric  1
+  repeatability-below-limit  error    metric  1
+  sample-small               warning  metric  1
+
+Findings (27)
+
+  ERROR    column-unknown             examples/bad/labels.csv:1
+           The column "inspector" of the labels file is not a column the tool reads. Nothing under it is checked.
+           fix: Correct the name to a column of docs/inputs.md, or take the column out of the file.
+
+  ERROR    column-duplicate           examples/bad/labels.csv:1
+           The column "Label" of the labels file has the same name as column 2 once case and separators are ignored; only the first is read.
+           fix: Take the second column out, or rename it.
+
+  ERROR    column-unknown             examples/bad/results.csv:1
+           The column "status" of the results file is not a column the tool reads. Nothing under it is checked.
+           fix: Correct the name to a column of docs/inputs.md, or take the column out of the file.
+
+  ERROR    column-duplicate           examples/bad/results.csv:1
+           The column "Run" of the results file has the same name as column 2 once case and separators are ignored; only the first is read.
+           fix: Take the second column out, or rename it.
+
+  ERROR    secret-in-file             examples/bad/labels.csv:3
+           Labels file: A cell of the column "note" is shaped like a mnemonic. The tool never reads a seed or a key, and the value is not shown.
+           fix: Treat the value as exposed if it is real: take it out of the file and out of every place the file was copied to. If it is made up, change it.
+
+  ERROR    defect-type-on-good        examples/bad/labels.csv:6
+           The part "B-G05" is labelled good but has the defect type "scratch". The type is ignored; one of the two cells is wrong.
+           fix: Decide which cell is wrong: take the type out, or change the label to defect.
+
+  ERROR    row-malformed              examples/bad/labels.csv:28
+           The row on line 28 of the labels file has 3 cells but the header has 7; the row was left out.
+           fix: Put a cell with a comma, a tab or a line end inside double quotes, and give every row one cell for each column of the header.
+
+  ERROR    cell-missing               examples/bad/labels.csv:29
+           The row on line 29 of the labels file has no value under "part_id", which every row needs; the row was left out.
+           fix: Fill the cell. A part that was not inspected has no row; it does not get an empty verdict.
+
+  ERROR    label-invalid              examples/bad/labels.csv:30
+           The label of the part "B-X02" is "maybe", which is not good or defect; the row was left out.
+           fix: Write good or defect. Put what kind of defect it is in defect_type, and a doubt in note.
+
+  ERROR    score-invalid              examples/bad/results.csv:13
+           The score of the part "B-G04" is "1e-1", which is not a plain decimal such as 0.82 or -1.5 (no exponent, no plus sign, no separator, at most 40 digits on each side of the point); the row is read without its score.
+           fix: Write the score as a plain decimal with a point.
+
+  ERROR    row-malformed              examples/bad/results.csv:32
+           The row on line 32 of the results file has 3 cells but the header has 7; the row was left out.
+           fix: Put a cell with a comma, a tab or a line end inside double quotes, and give every row one cell for each column of the header.
+
+  ERROR    cell-missing               examples/bad/results.csv:33
+           The row on line 33 of the results file has no value under "verdict", which every row needs; the row was left out.
+           fix: Fill the cell. A part that was not inspected has no row; it does not get an empty verdict.
+
+  ERROR    verdict-invalid            examples/bad/results.csv:34
+           The verdict of the part "B-G02" is "maybe", which is not pass or fail; the row was left out.
+           fix: Write pass or fail. A reject, a rework and a hold are a fail; put the reason in defect_type.
+
+  ERROR    run-invalid                examples/bad/results.csv:35
+           The run of the part "B-G03" is "two", which is not a whole number from 1 to 9,999,999; the row was left out.
+           fix: Number the runs of a part 1, 2, 3 and so on.
+
+  ERROR    label-without-result       examples/bad/labels.csv:22
+           The part "B-D11" is labelled defect but has no usable row in the results file, so it is in no rate.
+           fix: Add the result of the station for the part, or take the label out if the part was never inspected.
+
+  ERROR    label-duplicate            examples/bad/labels.csv:24
+           The part "B-D02" is labelled again by the labeler "inspector-a"; the row on line 13 already labels it. The later row was left out.
+           fix: Keep one row for each part and labeler. Two different labelers may label the same part; give each their name in labeler.
+
+  ERROR    run-sequence               examples/bad/results.csv:47
+           The run numbers of the part "B-D05" do not go from 1 to n: the runs of the part are 1 and 3, and run 2 is missing (runs go from 1 to the number of runs without a gap).
+           fix: Number the runs of each part 1 to n once each. If a run was repeated by mistake, take the extra row out.
+
+  ERROR    run-sequence               examples/bad/results.csv:67
+           The run numbers of the part "B-D04" do not go from 1 to n: run 2 is on line 46 and again on line 67, and the later row was left out.
+           fix: Number the runs of each part 1 to n once each. If a run was repeated by mistake, take the extra row out.
+
+  ERROR    result-without-label       examples/bad/results.csv:68
+           The part "B-Z99" has 1 row in the results file and no label in the labels file, so it is in no rate.
+           fix: Label the part, or take its rows out of the results file. Check that the part ids are written the same way in both files.
+
+  ERROR    escape-above-limit         rates
+           The escape rate is 28.57 percent per run (8 of 28 runs of defect parts passed), 30.00 percent by majority verdict (3 of 10 defect parts); the limit is 2 percent and the rate is above it per run and by majority verdict.
+           fix: Look at the defect parts the station passed, and the threshold or the lighting that let them through. Raise the limit only if the line can accept that rate.
+
+  ERROR    false-reject-above-limit   rates
+           The false reject rate is 26.67 percent per run (8 of 30 runs of good parts failed), 30.00 percent by majority verdict (3 of 10 good parts); the limit is 5 percent and the rate is above it per run and by majority verdict.
+           fix: Look at the good parts the station failed, and the threshold that rejects them. Raise the limit only if the line can accept the scrap and rework.
+
+  ERROR    repeatability-below-limit  rates
+           Repeatability is 65.00 percent (13 of 20 parts with more than one run gave the same verdict every time); the minimum is 95 percent. 7 parts had runs that disagreed.
+           fix: Look at the parts listed in the report where the runs disagreed: part position, lighting, a score close to the threshold. Run the same parts again after a change.
+
+  WARNING  column-missing             examples/bad/results.csv:1
+           The results file has no "defect_type" column, so the confusion matrix cannot name what the station reported; a failed run of a defect part counts as "(not named)".
+           fix: Add the column if the station or the labelers have the information (docs/inputs.md), or leave it out on purpose and accept what the warning says is lost.
+
+  WARNING  defect-type-missing        examples/bad/labels.csv:20
+           The part "B-D09" is labelled defect and has no defect type, so it is counted in the escape rate but in no defect type.
+           fix: Give the defect a type, or accept that it has none.
+
+  WARNING  label-conflict             examples/bad/labels.csv:14
+           The labelers of the part "B-D03" disagree: inspector-a says defect (dent) on line 14, inspector-b says good on line 25 and inspector-c says defect (dent) on line 26. The majority label is defect, with the type dent.
+           fix: Look at the part again with both labelers and settle the label. The rates depend on it.
+
+  WARNING  label-conflict             examples/bad/labels.csv:23
+           The labelers of the part "B-D12" disagree: inspector-a says defect (burr) on line 23 and inspector-b says good on line 27. The votes tie, so the part is left out of every rate.
+           fix: Look at the part again with both labelers and settle the label. The rates depend on it.
+
+  WARNING  sample-small               rates
+           Only 10 defect parts (at least 30 asked for) and 10 good parts (at least 30 asked for) were measured. Rates on so few parts mislead: one defect part is 10.00 percent of the defect parts and one good part is 10.00 percent of the good parts, so one part moves a rate by that much, and no escape among a handful of defect parts does not show that the escape rate is low. Measure more parts before accepting the station on these numbers.
+           fix: Measure more parts before accepting a station on these numbers, or lower the minimum if the sample is small on purpose and say so.
+
+note: 1 part was left out of every rate because the labelers tied on good or defect
+note: 1 result row was left out because a run number was used twice for a part
+
+This report is arithmetic on the labels and the results in the two files. It never looks at an image. The numbers are only as good as the labels and the sample. It does not replace a formal measurement system analysis or gauge study, and it is not a certification.
+
+RESULT: FAIL - 22 findings at or above error (22 error, 5 warning)

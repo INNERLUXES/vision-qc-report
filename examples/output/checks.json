@@ -1,0 +1,200 @@
+[
+  {
+    "id": "file-unreadable",
+    "severity": "error",
+    "kind": "file",
+    "summary": "a file is not a table the reader can follow (a quote never closed, text after a closing quote, a cell too long, semicolons for commas), holds a header and no rows, or lacks a needed column (part_id and label in the labels file, part_id and verdict in the results file); no rate was worked out",
+    "fix": "Save each file as CSV with commas or TSV with tabs, a header row and one row for each label or result (docs/inputs.md); fix the line named.",
+    "own": "Refusing a file that cannot be followed is a best practice of this tool; no standard sets it; a tool that guessed would report an escape rate on rows it did not read",
+    "cannot": "It says where the reader stopped, not what a spreadsheet program or another tool would make of the file."
+  },
+  {
+    "id": "column-missing",
+    "severity": "warning",
+    "kind": "file",
+    "summary": "a column the tool can use is not in the header: defect_type in either file (no rates for each defect type, or a matrix that names nothing), run in the results file (every row is read as run 1), or score in the results file when --threshold-sweep is asked for; the file is still read",
+    "fix": "Add the column if the station or the labelers have the information (docs/inputs.md), or leave it out on purpose and accept what the warning says is lost.",
+    "own": "Saying what a missing optional column costs is a best practice of this tool; no standard sets it; a report without the matrix or without repeatability looks complete unless it says what it could not do",
+    "cannot": "It looks at the header. It cannot tell a column that was left out on purpose from one that was lost on the way into the file."
+  },
+  {
+    "id": "column-unknown",
+    "severity": "error",
+    "kind": "file",
+    "summary": "a column the tool does not read, often a misspelt name; nothing under it was checked",
+    "fix": "Correct the name to a column of docs/inputs.md, or take the column out of the file.",
+    "own": "Reporting a column that is not read is a best practice of this tool; no standard sets it; a misspelt name such as defect_typ would otherwise hide a whole column from every check",
+    "cannot": "It suggests the nearest name within two edits and cannot tell a misspelling from a column you meant to add."
+  },
+  {
+    "id": "column-duplicate",
+    "severity": "error",
+    "kind": "file",
+    "summary": "two columns of one file with the same name once case and separators are ignored; only the first is read",
+    "fix": "Take the second column out, or rename it.",
+    "own": "Reporting a column written twice is a best practice of this tool; no standard sets it; two readers of the same file could take two different values from it",
+    "cannot": "It compares names. Two columns with different names and the same content are not reported."
+  },
+  {
+    "id": "row-malformed",
+    "severity": "error",
+    "kind": "record",
+    "summary": "a row with more or fewer cells than the header; the row was left out",
+    "fix": "Put a cell with a comma, a tab or a line end inside double quotes, and give every row one cell for each column of the header.",
+    "own": "Reporting a row that cannot be matched to the header is a best practice of this tool; no standard sets it; a row that is skipped without a word would change a rate",
+    "cannot": "It counts cells. It cannot tell which cell is missing in a short row."
+  },
+  {
+    "id": "cell-missing",
+    "severity": "error",
+    "kind": "record",
+    "summary": "a cell that every row needs is empty: part_id or label in the labels file, part_id, run (when the column is there) or verdict in the results file; the row was left out",
+    "fix": "Fill the cell. A part that was not inspected has no row; it does not get an empty verdict.",
+    "own": "Asking for a value in every needed cell is a best practice of this tool; no standard sets it; a finding must name the part it is about, and a result without a verdict says nothing",
+    "cannot": "It sees an empty cell. It cannot tell a value that was never recorded from one that was lost on the way into the file."
+  },
+  {
+    "id": "label-invalid",
+    "severity": "error",
+    "kind": "record",
+    "summary": "a label that is not good or defect (written in any case); the row was left out",
+    "fix": "Write good or defect. Put what kind of defect it is in defect_type, and a doubt in note.",
+    "own": "Accepting only two labels is a best practice of this tool; no standard sets it; a third word such as maybe or ok has no place in an escape rate and would be guessed at",
+    "cannot": "It reads the word. It cannot say whether the label is right."
+  },
+  {
+    "id": "verdict-invalid",
+    "severity": "error",
+    "kind": "record",
+    "summary": "a verdict that is not pass or fail (written in any case); the row was left out",
+    "fix": "Write pass or fail. A reject, a rework and a hold are a fail; put the reason in defect_type.",
+    "own": "Accepting only two verdicts is a best practice of this tool; no standard sets it; a third word such as review would be guessed at, and it moves both rates",
+    "cannot": "It reads the word. It cannot say what the station did with a part it did not decide."
+  },
+  {
+    "id": "run-invalid",
+    "severity": "error",
+    "kind": "record",
+    "summary": "a run that is not a whole number from 1 to 9,999,999; the row was left out",
+    "fix": "Number the runs of a part 1, 2, 3 and so on.",
+    "own": "Reading a run only as a whole number is a best practice of this tool; no standard sets it; the number is what tells a repeated run from a row written twice",
+    "cannot": "It reads the number. It cannot tell whether the runs were made on the same part in the same state."
+  },
+  {
+    "id": "score-invalid",
+    "severity": "error",
+    "kind": "record",
+    "summary": "a score that is not a plain decimal such as 0.82 or -1.5 (no exponent, no plus sign, no thousands separator, at most 40 digits on each side of the point); the row is read without its score",
+    "fix": "Write the score as a plain decimal with a point.",
+    "own": "Reading scores only as plain decimals is a best practice of this tool; no standard sets it; a score read by guessing could move a threshold, and exact arithmetic needs the digits as written",
+    "cannot": "It reads the characters. It cannot say what the score means or whether higher is worse; that is the choice of --score-direction."
+  },
+  {
+    "id": "secret-in-file",
+    "severity": "error",
+    "kind": "record",
+    "summary": "a column named for a key or a seed, or a long cell shaped like a mnemonic, an extended private key, a private key in hex or a key in WIF (a part_id of 64 hex digits is read as a part id); the value is left out of every check and never shown",
+    "fix": "Treat the value as exposed if it is real: take it out of the file and out of every place the file was copied to. If it is made up, change it.",
+    "own": "Looking for keys and seeds in the files is a best practice of this tool; no standard sets it; a table that gets copied around may carry a secret, and a report must never copy it into a log",
+    "cannot": "The shapes are few and loose (docs/limits.md). A secret in another shape is not found."
+  },
+  {
+    "id": "defect-type-on-good",
+    "severity": "error",
+    "kind": "record",
+    "summary": "a part labelled good that also has a defect type; the type is ignored",
+    "fix": "Decide which cell is wrong: take the type out, or change the label to defect.",
+    "own": "Reporting a label that contradicts itself is a best practice of this tool; no standard sets it; one of the two cells is wrong, and the tool should not choose which",
+    "cannot": "It sees both cells. It cannot say which one the labeler meant."
+  },
+  {
+    "id": "defect-type-missing",
+    "severity": "warning",
+    "kind": "record",
+    "summary": "a part labelled defect with no defect type (when the labels file has the column); it counts in the escape rate and in no defect type",
+    "fix": "Give the defect a type, or accept that it has none.",
+    "own": "Reporting a defect with no type is a best practice of this tool; no standard sets it; the rates for each defect type are over the typed defects only, and the matrix would silently be smaller",
+    "cannot": "It sees an empty cell. It cannot say what the defect was."
+  },
+  {
+    "id": "label-duplicate",
+    "severity": "error",
+    "kind": "part",
+    "summary": "a part labelled twice by the same labeler (two rows with no labeler count as the same labeler); the later row was left out",
+    "fix": "Keep one row for each part and labeler. Two different labelers may label the same part; give each their name in labeler.",
+    "own": "Counting a labeler once for a part is a best practice of this tool; no standard sets it; a row written twice would count as two votes, and two different answers from one labeler would be a guess",
+    "cannot": "It compares the names of labelers. One person under two names counts as two labelers."
+  },
+  {
+    "id": "label-conflict",
+    "severity": "warning",
+    "kind": "part",
+    "summary": "two or more labelers disagree on a part, on good or defect or on the defect type; the majority rule decides (docs/method.md), and a tie on good or defect leaves the part out of every rate",
+    "fix": "Look at the part again with both labelers and settle the label. The rates depend on it.",
+    "own": "Applying a majority rule and saying so is a best practice of this tool; no standard sets it; parts the labelers disagree on are the hard parts, and they are the ones that move the rates",
+    "cannot": "It counts votes. It does not weigh the experience of a labeler and cannot say who is right."
+  },
+  {
+    "id": "run-sequence",
+    "severity": "error",
+    "kind": "part",
+    "summary": "the runs of a part do not go from 1 to n without a gap, or a run number is used twice for a part (the later row was left out)",
+    "fix": "Number the runs of each part 1 to n once each. If a run was repeated by mistake, take the extra row out.",
+    "own": "Asking for runs from 1 to n is a best practice of this tool; no standard sets it; a gap means a run is missing from the file, and a repeated number means a row may be written twice, either of which moves repeatability",
+    "cannot": "It reads the numbers. It cannot say whether the runs were really made, in the order the numbers say."
+  },
+  {
+    "id": "result-without-label",
+    "severity": "error",
+    "kind": "part",
+    "summary": "a part has rows in the results file and no label in the labels file; it is in no rate",
+    "fix": "Label the part, or take its rows out of the results file. Check that the part ids are written the same way in both files.",
+    "own": "Reporting results that cannot be measured is a best practice of this tool; no standard sets it; a part without a label is not a good part or a defect part, and leaving it out quietly would change the sample",
+    "cannot": "It matches part ids as text. A part written as P-007 in one file and P007 in the other is two parts."
+  },
+  {
+    "id": "label-without-result",
+    "severity": "error",
+    "kind": "part",
+    "summary": "a part is labelled and has no usable row in the results file; it is in no rate (a part whose labelers tie is not reported here)",
+    "fix": "Add the result of the station for the part, or take the label out if the part was never inspected.",
+    "own": "Reporting a labelled part that has no result is a best practice of this tool; no standard sets it; a defect part the station never saw would otherwise leave the escape rate lower, with no word about it",
+    "cannot": "It matches part ids as text. It cannot say why the part has no result."
+  },
+  {
+    "id": "escape-above-limit",
+    "severity": "error",
+    "kind": "metric",
+    "summary": "the escape rate (defect parts the station passed over all defect parts), per run or by the majority verdict, is above --max-escape (default 2 percent), or cannot be measured because no defect part has a result; compared exactly",
+    "fix": "Look at the defect parts the station passed, and the threshold or the lighting that let them through. Raise the limit only if the line can accept that rate.",
+    "own": "Failing a run on the escape rate is a best practice of this tool; no standard sets it; a defect that passes reaches the customer, and it is the rate an acceptance usually asks for first",
+    "cannot": "It counts the parts in the files. It does not know how many defects the line makes, what an escape costs, or whether the defect parts are the ones the line produces."
+  },
+  {
+    "id": "false-reject-above-limit",
+    "severity": "error",
+    "kind": "metric",
+    "summary": "the false reject rate (good parts the station failed over all good parts), per run or by the majority verdict, is above --max-false-reject (default 5 percent), or cannot be measured because no good part has a result; compared exactly",
+    "fix": "Look at the good parts the station failed, and the threshold that rejects them. Raise the limit only if the line can accept the scrap and rework.",
+    "own": "Failing a run on the false reject rate is a best practice of this tool; no standard sets it; a threshold that catches every defect by failing everything would otherwise look perfect on the escape rate",
+    "cannot": "It counts the parts in the files. It does not know what a false reject costs or whether the good parts are the ones the line produces."
+  },
+  {
+    "id": "repeatability-below-limit",
+    "severity": "error",
+    "kind": "metric",
+    "summary": "the share of the parts with more than one run whose runs all gave the same verdict is below --min-repeatability (default 95 percent), or cannot be measured when the limit was given and no part has more than one run; compared exactly",
+    "fix": "Look at the parts listed in the report where the runs disagreed: part position, lighting, a score close to the threshold. Run the same parts again after a change.",
+    "own": "Failing a run on repeatability is a best practice of this tool; no standard sets it; a station that gives a different verdict on the same part is not measuring the part",
+    "cannot": "It compares verdicts. It does not know whether the part was moved between runs, and it is not the gauge repeatability and reproducibility of a measurement system analysis."
+  },
+  {
+    "id": "sample-small",
+    "severity": "warning",
+    "kind": "metric",
+    "summary": "fewer than --min-defects defect parts (default 30) or fewer than --min-good good parts (default 30) were measured; a rate on so few parts misleads",
+    "fix": "Measure more parts before accepting a station on these numbers, or lower the minimum if the sample is small on purpose and say so.",
+    "own": "Warning about a small sample is a best practice of this tool; no standard sets it; a rate of zero on ten parts is not a proof of a low rate, and one part moves a rate by many points",
+    "cannot": "It counts parts. It does not know how many parts an acceptance needs, whether the parts cover the defects the line makes, or whether the sample was drawn fairly."
+  }
+]

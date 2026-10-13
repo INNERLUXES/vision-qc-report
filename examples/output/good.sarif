@@ -1,0 +1,386 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "vision-qc-report",
+          "version": "1.0.0",
+          "informationUri": "https://github.com/INNERLUXES/vision-qc-report",
+          "rules": [
+            {
+              "id": "file-unreadable",
+              "name": "file-unreadable",
+              "shortDescription": {
+                "text": "a file is not a table the reader can follow (a quote never closed, text after a closing quote, a cell too long, semicolons for commas), holds a header and no rows, or lacks a needed column (part_id and label in the labels file, part_id and verdict in the results file); no rate was worked out"
+              },
+              "help": {
+                "text": "Save each file as CSV with commas or TSV with tabs, a header row and one row for each label or result (docs/inputs.md); fix the line named. (file)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "file"
+              }
+            },
+            {
+              "id": "column-missing",
+              "name": "column-missing",
+              "shortDescription": {
+                "text": "a column the tool can use is not in the header: defect_type in either file (no rates for each defect type, or a matrix that names nothing), run in the results file (every row is read as run 1), or score in the results file when --threshold-sweep is asked for; the file is still read"
+              },
+              "help": {
+                "text": "Add the column if the station or the labelers have the information (docs/inputs.md), or leave it out on purpose and accept what the warning says is lost. (file)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "file"
+              }
+            },
+            {
+              "id": "column-unknown",
+              "name": "column-unknown",
+              "shortDescription": {
+                "text": "a column the tool does not read, often a misspelt name; nothing under it was checked"
+              },
+              "help": {
+                "text": "Correct the name to a column of docs/inputs.md, or take the column out of the file. (file)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "file"
+              }
+            },
+            {
+              "id": "column-duplicate",
+              "name": "column-duplicate",
+              "shortDescription": {
+                "text": "two columns of one file with the same name once case and separators are ignored; only the first is read"
+              },
+              "help": {
+                "text": "Take the second column out, or rename it. (file)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "file"
+              }
+            },
+            {
+              "id": "row-malformed",
+              "name": "row-malformed",
+              "shortDescription": {
+                "text": "a row with more or fewer cells than the header; the row was left out"
+              },
+              "help": {
+                "text": "Put a cell with a comma, a tab or a line end inside double quotes, and give every row one cell for each column of the header. (record)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "record"
+              }
+            },
+            {
+              "id": "cell-missing",
+              "name": "cell-missing",
+              "shortDescription": {
+                "text": "a cell that every row needs is empty: part_id or label in the labels file, part_id, run (when the column is there) or verdict in the results file; the row was left out"
+              },
+              "help": {
+                "text": "Fill the cell. A part that was not inspected has no row; it does not get an empty verdict. (record)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "record"
+              }
+            },
+            {
+              "id": "label-invalid",
+              "name": "label-invalid",
+              "shortDescription": {
+                "text": "a label that is not good or defect (written in any case); the row was left out"
+              },
+              "help": {
+                "text": "Write good or defect. Put what kind of defect it is in defect_type, and a doubt in note. (record)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "record"
+              }
+            },
+            {
+              "id": "verdict-invalid",
+              "name": "verdict-invalid",
+              "shortDescription": {
+                "text": "a verdict that is not pass or fail (written in any case); the row was left out"
+              },
+              "help": {
+                "text": "Write pass or fail. A reject, a rework and a hold are a fail; put the reason in defect_type. (record)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "record"
+              }
+            },
+            {
+              "id": "run-invalid",
+              "name": "run-invalid",
+              "shortDescription": {
+                "text": "a run that is not a whole number from 1 to 9,999,999; the row was left out"
+              },
+              "help": {
+                "text": "Number the runs of a part 1, 2, 3 and so on. (record)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "record"
+              }
+            },
+            {
+              "id": "score-invalid",
+              "name": "score-invalid",
+              "shortDescription": {
+                "text": "a score that is not a plain decimal such as 0.82 or -1.5 (no exponent, no plus sign, no thousands separator, at most 40 digits on each side of the point); the row is read without its score"
+              },
+              "help": {
+                "text": "Write the score as a plain decimal with a point. (record)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "record"
+              }
+            },
+            {
+              "id": "secret-in-file",
+              "name": "secret-in-file",
+              "shortDescription": {
+                "text": "a column named for a key or a seed, or a long cell shaped like a mnemonic, an extended private key, a private key in hex or a key in WIF (a part_id of 64 hex digits is read as a part id); the value is left out of every check and never shown"
+              },
+              "help": {
+                "text": "Treat the value as exposed if it is real: take it out of the file and out of every place the file was copied to. If it is made up, change it. (record)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "record"
+              }
+            },
+            {
+              "id": "defect-type-on-good",
+              "name": "defect-type-on-good",
+              "shortDescription": {
+                "text": "a part labelled good that also has a defect type; the type is ignored"
+              },
+              "help": {
+                "text": "Decide which cell is wrong: take the type out, or change the label to defect. (record)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "record"
+              }
+            },
+            {
+              "id": "defect-type-missing",
+              "name": "defect-type-missing",
+              "shortDescription": {
+                "text": "a part labelled defect with no defect type (when the labels file has the column); it counts in the escape rate and in no defect type"
+              },
+              "help": {
+                "text": "Give the defect a type, or accept that it has none. (record)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "record"
+              }
+            },
+            {
+              "id": "label-duplicate",
+              "name": "label-duplicate",
+              "shortDescription": {
+                "text": "a part labelled twice by the same labeler (two rows with no labeler count as the same labeler); the later row was left out"
+              },
+              "help": {
+                "text": "Keep one row for each part and labeler. Two different labelers may label the same part; give each their name in labeler. (part)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "part"
+              }
+            },
+            {
+              "id": "label-conflict",
+              "name": "label-conflict",
+              "shortDescription": {
+                "text": "two or more labelers disagree on a part, on good or defect or on the defect type; the majority rule decides (docs/method.md), and a tie on good or defect leaves the part out of every rate"
+              },
+              "help": {
+                "text": "Look at the part again with both labelers and settle the label. The rates depend on it. (part)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "part"
+              }
+            },
+            {
+              "id": "run-sequence",
+              "name": "run-sequence",
+              "shortDescription": {
+                "text": "the runs of a part do not go from 1 to n without a gap, or a run number is used twice for a part (the later row was left out)"
+              },
+              "help": {
+                "text": "Number the runs of each part 1 to n once each. If a run was repeated by mistake, take the extra row out. (part)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "part"
+              }
+            },
+            {
+              "id": "result-without-label",
+              "name": "result-without-label",
+              "shortDescription": {
+                "text": "a part has rows in the results file and no label in the labels file; it is in no rate"
+              },
+              "help": {
+                "text": "Label the part, or take its rows out of the results file. Check that the part ids are written the same way in both files. (part)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "part"
+              }
+            },
+            {
+              "id": "label-without-result",
+              "name": "label-without-result",
+              "shortDescription": {
+                "text": "a part is labelled and has no usable row in the results file; it is in no rate (a part whose labelers tie is not reported here)"
+              },
+              "help": {
+                "text": "Add the result of the station for the part, or take the label out if the part was never inspected. (part)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "part"
+              }
+            },
+            {
+              "id": "escape-above-limit",
+              "name": "escape-above-limit",
+              "shortDescription": {
+                "text": "the escape rate (defect parts the station passed over all defect parts), per run or by the majority verdict, is above --max-escape (default 2 percent), or cannot be measured because no defect part has a result; compared exactly"
+              },
+              "help": {
+                "text": "Look at the defect parts the station passed, and the threshold or the lighting that let them through. Raise the limit only if the line can accept that rate. (metric)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "metric"
+              }
+            },
+            {
+              "id": "false-reject-above-limit",
+              "name": "false-reject-above-limit",
+              "shortDescription": {
+                "text": "the false reject rate (good parts the station failed over all good parts), per run or by the majority verdict, is above --max-false-reject (default 5 percent), or cannot be measured because no good part has a result; compared exactly"
+              },
+              "help": {
+                "text": "Look at the good parts the station failed, and the threshold that rejects them. Raise the limit only if the line can accept the scrap and rework. (metric)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "metric"
+              }
+            },
+            {
+              "id": "repeatability-below-limit",
+              "name": "repeatability-below-limit",
+              "shortDescription": {
+                "text": "the share of the parts with more than one run whose runs all gave the same verdict is below --min-repeatability (default 95 percent), or cannot be measured when the limit was given and no part has more than one run; compared exactly"
+              },
+              "help": {
+                "text": "Look at the parts listed in the report where the runs disagreed: part position, lighting, a score close to the threshold. Run the same parts again after a change. (metric)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "kind": "metric"
+              }
+            },
+            {
+              "id": "sample-small",
+              "name": "sample-small",
+              "shortDescription": {
+                "text": "fewer than --min-defects defect parts (default 30) or fewer than --min-good good parts (default 30) were measured; a rate on so few parts misleads"
+              },
+              "help": {
+                "text": "Measure more parts before accepting a station on these numbers, or lower the minimum if the sample is small on purpose and say so. (metric)"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "kind": "metric"
+              }
+            }
+          ]
+        }
+      },
+      "artifacts": [
+        {
+          "location": {
+            "uri": "examples/good/labels.csv"
+          }
+        },
+        {
+          "location": {
+            "uri": "examples/good/results.csv"
+          }
+        }
+      ],
+      "results": [],
+      "properties": {
+        "notice": "This report is arithmetic on the labels and the results in the two files. It never looks at an image. The numbers are only as good as the labels and the sample. It does not replace a formal measurement system analysis or gauge study, and it is not a certification.",
+        "result": "PASS - no finding at or above error"
+      }
+    }
+  ]
+}

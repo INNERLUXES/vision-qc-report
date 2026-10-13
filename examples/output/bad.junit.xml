@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="vision-qc-report" tests="3" failures="3" errors="0" time="0">
+  <testsuite name="acceptance" tests="3" failures="3" errors="0" skipped="0" time="0">
+    <testcase classname="acceptance" name="escape rate at most 2 percent" time="0">
+      <failure type="escape-above-limit" message="28.57 percent per run (8 of 28 runs of defect parts passed), 30.00 percent by majority verdict (3 of 10 defect parts)">The escape rate is 28.57 percent per run (8 of 28 runs of defect parts passed), 30.00 percent by majority verdict (3 of 10 defect parts); the limit is 2 percent and the rate is above it per run and by majority verdict.</failure>
+    </testcase>
+    <testcase classname="acceptance" name="false reject rate at most 5 percent" time="0">
+      <failure type="false-reject-above-limit" message="26.67 percent per run (8 of 30 runs of good parts failed), 30.00 percent by majority verdict (3 of 10 good parts)">The false reject rate is 26.67 percent per run (8 of 30 runs of good parts failed), 30.00 percent by majority verdict (3 of 10 good parts); the limit is 5 percent and the rate is above it per run and by majority verdict.</failure>
+    </testcase>
+    <testcase classname="acceptance" name="repeatability at least 95 percent" time="0">
+      <failure type="repeatability-below-limit" message="65.00 percent (13 of 20 parts with more than one run gave the same verdict every time)">Repeatability is 65.00 percent (13 of 20 parts with more than one run gave the same verdict every time); the minimum is 95 percent. 7 parts had runs that disagreed.</failure>
+    </testcase>
+  </testsuite>
+</testsuites>

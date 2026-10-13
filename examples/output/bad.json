@@ -1,0 +1,933 @@
+{
+  "tool": "vision-qc-report",
+  "version": "1.0.0",
+  "input": {
+    "labels": {
+      "file": "examples/bad/labels.csv",
+      "format": "CSV",
+      "bytes": 1023,
+      "lines": 30,
+      "records": 29,
+      "leftOut": 3
+    },
+    "results": {
+      "file": "examples/bad/results.csv",
+      "format": "CSV",
+      "bytes": 1839,
+      "lines": 68,
+      "records": 67,
+      "leftOut": 4
+    }
+  },
+  "evaluated": true,
+  "summary": {
+    "labelled": {
+      "parts": 22,
+      "good": 10,
+      "defect": 11,
+      "undecided": 1,
+      "duplicateRows": 1
+    },
+    "results": {
+      "parts": 22,
+      "rowsKept": 62,
+      "rowsLeftOut": 1,
+      "unlabelled": 1
+    },
+    "measured": {
+      "parts": 20,
+      "good": 10,
+      "defect": 10,
+      "runs": 58
+    }
+  },
+  "rates": {
+    "escape": {
+      "perRun": {
+        "count": 8,
+        "of": 28,
+        "percent": "28.57"
+      },
+      "majority": {
+        "count": 3,
+        "of": 10,
+        "percent": "30.00"
+      },
+      "tied": 1
+    },
+    "falseReject": {
+      "perRun": {
+        "count": 8,
+        "of": 30,
+        "percent": "26.67"
+      },
+      "majority": {
+        "count": 3,
+        "of": 10,
+        "percent": "30.00"
+      },
+      "tied": 0
+    },
+    "repeatability": {
+      "parts": 20,
+      "consistent": 13,
+      "disagreeing": 7,
+      "rate": {
+        "count": 13,
+        "of": 20,
+        "percent": "65.00"
+      }
+    }
+  },
+  "types": [
+    {
+      "type": "burr",
+      "parts": 2,
+      "runs": 5,
+      "detected": {
+        "count": 4,
+        "of": 5,
+        "percent": "80.00"
+      },
+      "named": {
+        "count": 0,
+        "of": 5,
+        "percent": "0.00"
+      }
+    },
+    {
+      "type": "dent",
+      "parts": 2,
+      "runs": 5,
+      "detected": {
+        "count": 4,
+        "of": 5,
+        "percent": "80.00"
+      },
+      "named": {
+        "count": 0,
+        "of": 5,
+        "percent": "0.00"
+      }
+    },
+    {
+      "type": "missing-hole",
+      "parts": 2,
+      "runs": 6,
+      "detected": {
+        "count": 4,
+        "of": 6,
+        "percent": "66.67"
+      },
+      "named": {
+        "count": 0,
+        "of": 6,
+        "percent": "0.00"
+      }
+    },
+    {
+      "type": "scratch",
+      "parts": 3,
+      "runs": 9,
+      "detected": {
+        "count": 5,
+        "of": 9,
+        "percent": "55.56"
+      },
+      "named": {
+        "count": 0,
+        "of": 9,
+        "percent": "0.00"
+      }
+    },
+    {
+      "type": "(no type)",
+      "parts": 1,
+      "runs": 3,
+      "detected": {
+        "count": 3,
+        "of": 3,
+        "percent": "100.00"
+      },
+      "named": null
+    }
+  ],
+  "matrix": {
+    "columns": [
+      "burr",
+      "dent",
+      "missing-hole",
+      "scratch",
+      "(not named)",
+      "passed"
+    ],
+    "rows": [
+      {
+        "type": "burr",
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          4,
+          1
+        ]
+      },
+      {
+        "type": "dent",
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          4,
+          1
+        ]
+      },
+      {
+        "type": "missing-hole",
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          4,
+          2
+        ]
+      },
+      {
+        "type": "scratch",
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          5,
+          4
+        ]
+      },
+      {
+        "type": "(no type)",
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          3,
+          0
+        ]
+      },
+      {
+        "type": "(good part)",
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          8,
+          22
+        ]
+      }
+    ]
+  },
+  "disagreements": {
+    "listed": [
+      {
+        "part": "B-G05",
+        "label": "good",
+        "type": null,
+        "line": 14,
+        "runs": [
+          {
+            "run": 1,
+            "verdict": "fail",
+            "line": 14
+          },
+          {
+            "run": 2,
+            "verdict": "fail",
+            "line": 15
+          },
+          {
+            "run": 3,
+            "verdict": "pass",
+            "line": 16
+          }
+        ]
+      },
+      {
+        "part": "B-G06",
+        "label": "good",
+        "type": null,
+        "line": 17,
+        "runs": [
+          {
+            "run": 1,
+            "verdict": "fail",
+            "line": 17
+          },
+          {
+            "run": 2,
+            "verdict": "pass",
+            "line": 18
+          },
+          {
+            "run": 3,
+            "verdict": "fail",
+            "line": 19
+          }
+        ]
+      },
+      {
+        "part": "B-G07",
+        "label": "good",
+        "type": null,
+        "line": 20,
+        "runs": [
+          {
+            "run": 1,
+            "verdict": "pass",
+            "line": 20
+          },
+          {
+            "run": 2,
+            "verdict": "pass",
+            "line": 21
+          },
+          {
+            "run": 3,
+            "verdict": "fail",
+            "line": 22
+          }
+        ]
+      },
+      {
+        "part": "B-D03",
+        "label": "defect",
+        "type": "dent",
+        "line": 42,
+        "runs": [
+          {
+            "run": 1,
+            "verdict": "fail",
+            "line": 42
+          },
+          {
+            "run": 2,
+            "verdict": "fail",
+            "line": 43
+          },
+          {
+            "run": 3,
+            "verdict": "pass",
+            "line": 44
+          }
+        ]
+      },
+      {
+        "part": "B-D05",
+        "label": "defect",
+        "type": "burr",
+        "line": 47,
+        "runs": [
+          {
+            "run": 1,
+            "verdict": "fail",
+            "line": 47
+          },
+          {
+            "run": 3,
+            "verdict": "pass",
+            "line": 48
+          }
+        ]
+      },
+      {
+        "part": "B-D07",
+        "label": "defect",
+        "type": "missing-hole",
+        "line": 52,
+        "runs": [
+          {
+            "run": 1,
+            "verdict": "pass",
+            "line": 52
+          },
+          {
+            "run": 2,
+            "verdict": "fail",
+            "line": 53
+          },
+          {
+            "run": 3,
+            "verdict": "pass",
+            "line": 54
+          }
+        ]
+      },
+      {
+        "part": "B-D10",
+        "label": "defect",
+        "type": "scratch",
+        "line": 61,
+        "runs": [
+          {
+            "run": 1,
+            "verdict": "fail",
+            "line": 61
+          },
+          {
+            "run": 2,
+            "verdict": "fail",
+            "line": 62
+          },
+          {
+            "run": 3,
+            "verdict": "pass",
+            "line": 63
+          }
+        ]
+      }
+    ],
+    "notListed": 0
+  },
+  "stations": [
+    {
+      "station": "cell-1",
+      "escape": {
+        "count": 4,
+        "of": 14,
+        "percent": "28.57"
+      },
+      "falseReject": {
+        "count": 5,
+        "of": 15,
+        "percent": "33.33"
+      }
+    },
+    {
+      "station": "cell-2",
+      "escape": {
+        "count": 4,
+        "of": 14,
+        "percent": "28.57"
+      },
+      "falseReject": {
+        "count": 3,
+        "of": 15,
+        "percent": "20.00"
+      }
+    }
+  ],
+  "sweep": null,
+  "acceptance": [
+    {
+      "check": "escape-above-limit",
+      "name": "escape rate at most 2 percent",
+      "status": "fail",
+      "detail": "28.57 percent per run (8 of 28 runs of defect parts passed), 30.00 percent by majority verdict (3 of 10 defect parts)"
+    },
+    {
+      "check": "false-reject-above-limit",
+      "name": "false reject rate at most 5 percent",
+      "status": "fail",
+      "detail": "26.67 percent per run (8 of 30 runs of good parts failed), 30.00 percent by majority verdict (3 of 10 good parts)"
+    },
+    {
+      "check": "repeatability-below-limit",
+      "name": "repeatability at least 95 percent",
+      "status": "fail",
+      "detail": "65.00 percent (13 of 20 parts with more than one run gave the same verdict every time)"
+    }
+  ],
+  "totals": {
+    "findings": 27,
+    "byLevel": {
+      "error": 22,
+      "warning": 5,
+      "info": 0
+    },
+    "hidden": 0
+  },
+  "rules": [
+    {
+      "id": "file-unreadable",
+      "level": "error",
+      "kind": "file",
+      "findings": 0
+    },
+    {
+      "id": "column-missing",
+      "level": "warning",
+      "kind": "file",
+      "findings": 1
+    },
+    {
+      "id": "column-unknown",
+      "level": "error",
+      "kind": "file",
+      "findings": 2
+    },
+    {
+      "id": "column-duplicate",
+      "level": "error",
+      "kind": "file",
+      "findings": 2
+    },
+    {
+      "id": "row-malformed",
+      "level": "error",
+      "kind": "record",
+      "findings": 2
+    },
+    {
+      "id": "cell-missing",
+      "level": "error",
+      "kind": "record",
+      "findings": 2
+    },
+    {
+      "id": "label-invalid",
+      "level": "error",
+      "kind": "record",
+      "findings": 1
+    },
+    {
+      "id": "verdict-invalid",
+      "level": "error",
+      "kind": "record",
+      "findings": 1
+    },
+    {
+      "id": "run-invalid",
+      "level": "error",
+      "kind": "record",
+      "findings": 1
+    },
+    {
+      "id": "score-invalid",
+      "level": "error",
+      "kind": "record",
+      "findings": 1
+    },
+    {
+      "id": "secret-in-file",
+      "level": "error",
+      "kind": "record",
+      "findings": 1
+    },
+    {
+      "id": "defect-type-on-good",
+      "level": "error",
+      "kind": "record",
+      "findings": 1
+    },
+    {
+      "id": "defect-type-missing",
+      "level": "warning",
+      "kind": "record",
+      "findings": 1
+    },
+    {
+      "id": "label-duplicate",
+      "level": "error",
+      "kind": "part",
+      "findings": 1
+    },
+    {
+      "id": "label-conflict",
+      "level": "warning",
+      "kind": "part",
+      "findings": 2
+    },
+    {
+      "id": "run-sequence",
+      "level": "error",
+      "kind": "part",
+      "findings": 2
+    },
+    {
+      "id": "result-without-label",
+      "level": "error",
+      "kind": "part",
+      "findings": 1
+    },
+    {
+      "id": "label-without-result",
+      "level": "error",
+      "kind": "part",
+      "findings": 1
+    },
+    {
+      "id": "escape-above-limit",
+      "level": "error",
+      "kind": "metric",
+      "findings": 1
+    },
+    {
+      "id": "false-reject-above-limit",
+      "level": "error",
+      "kind": "metric",
+      "findings": 1
+    },
+    {
+      "id": "repeatability-below-limit",
+      "level": "error",
+      "kind": "metric",
+      "findings": 1
+    },
+    {
+      "id": "sample-small",
+      "level": "warning",
+      "kind": "metric",
+      "findings": 1
+    }
+  ],
+  "options": {
+    "minSeverity": "info",
+    "failOn": "error",
+    "maxEscape": "2",
+    "maxFalseReject": "5",
+    "minRepeatability": "95",
+    "minDefects": 30,
+    "minGood": 30,
+    "thresholdSweep": false,
+    "scoreDirection": "high"
+  },
+  "findings": [
+    {
+      "id": "column-unknown",
+      "severity": "error",
+      "message": "The column \"inspector\" of the labels file is not a column the tool reads. Nothing under it is checked.",
+      "file": "examples/bad/labels.csv",
+      "line": 1,
+      "column": 40,
+      "at": "examples/bad/labels.csv:1",
+      "subject": "inspector",
+      "fix": "Correct the name to a column of docs/inputs.md, or take the column out of the file.",
+      "kind": "file"
+    },
+    {
+      "id": "column-duplicate",
+      "severity": "error",
+      "message": "The column \"Label\" of the labels file has the same name as column 2 once case and separators are ignored; only the first is read.",
+      "file": "examples/bad/labels.csv",
+      "line": 1,
+      "column": 50,
+      "at": "examples/bad/labels.csv:1",
+      "subject": "label",
+      "fix": "Take the second column out, or rename it.",
+      "kind": "file"
+    },
+    {
+      "id": "column-unknown",
+      "severity": "error",
+      "message": "The column \"status\" of the results file is not a column the tool reads. Nothing under it is checked.",
+      "file": "examples/bad/results.csv",
+      "line": 1,
+      "column": 35,
+      "at": "examples/bad/results.csv:1",
+      "subject": "status",
+      "fix": "Correct the name to a column of docs/inputs.md, or take the column out of the file.",
+      "kind": "file"
+    },
+    {
+      "id": "column-duplicate",
+      "severity": "error",
+      "message": "The column \"Run\" of the results file has the same name as column 2 once case and separators are ignored; only the first is read.",
+      "file": "examples/bad/results.csv",
+      "line": 1,
+      "column": 42,
+      "at": "examples/bad/results.csv:1",
+      "subject": "run",
+      "fix": "Take the second column out, or rename it.",
+      "kind": "file"
+    },
+    {
+      "id": "secret-in-file",
+      "severity": "error",
+      "message": "Labels file: A cell of the column \"note\" is shaped like a mnemonic. The tool never reads a seed or a key, and the value is not shown.",
+      "file": "examples/bad/labels.csv",
+      "line": 3,
+      "column": 25,
+      "at": "examples/bad/labels.csv:3",
+      "subject": null,
+      "fix": "Treat the value as exposed if it is real: take it out of the file and out of every place the file was copied to. If it is made up, change it.",
+      "kind": "record"
+    },
+    {
+      "id": "defect-type-on-good",
+      "severity": "error",
+      "message": "The part \"B-G05\" is labelled good but has the defect type \"scratch\". The type is ignored; one of the two cells is wrong.",
+      "file": "examples/bad/labels.csv",
+      "line": 6,
+      "column": 12,
+      "at": "examples/bad/labels.csv:6",
+      "subject": "B-G05",
+      "fix": "Decide which cell is wrong: take the type out, or change the label to defect.",
+      "kind": "record"
+    },
+    {
+      "id": "row-malformed",
+      "severity": "error",
+      "message": "The row on line 28 of the labels file has 3 cells but the header has 7; the row was left out.",
+      "file": "examples/bad/labels.csv",
+      "line": 28,
+      "column": 1,
+      "at": "examples/bad/labels.csv:28",
+      "subject": null,
+      "fix": "Put a cell with a comma, a tab or a line end inside double quotes, and give every row one cell for each column of the header.",
+      "kind": "record"
+    },
+    {
+      "id": "cell-missing",
+      "severity": "error",
+      "message": "The row on line 29 of the labels file has no value under \"part_id\", which every row needs; the row was left out.",
+      "file": "examples/bad/labels.csv",
+      "line": 29,
+      "column": 1,
+      "at": "examples/bad/labels.csv:29",
+      "subject": "part_id",
+      "fix": "Fill the cell. A part that was not inspected has no row; it does not get an empty verdict.",
+      "kind": "record"
+    },
+    {
+      "id": "label-invalid",
+      "severity": "error",
+      "message": "The label of the part \"B-X02\" is \"maybe\", which is not good or defect; the row was left out.",
+      "file": "examples/bad/labels.csv",
+      "line": 30,
+      "column": 7,
+      "at": "examples/bad/labels.csv:30",
+      "subject": "B-X02",
+      "fix": "Write good or defect. Put what kind of defect it is in defect_type, and a doubt in note.",
+      "kind": "record"
+    },
+    {
+      "id": "score-invalid",
+      "severity": "error",
+      "message": "The score of the part \"B-G04\" is \"1e-1\", which is not a plain decimal such as 0.82 or -1.5 (no exponent, no plus sign, no separator, at most 40 digits on each side of the point); the row is read without its score.",
+      "file": "examples/bad/results.csv",
+      "line": 13,
+      "column": 14,
+      "at": "examples/bad/results.csv:13",
+      "subject": "B-G04",
+      "fix": "Write the score as a plain decimal with a point.",
+      "kind": "record"
+    },
+    {
+      "id": "row-malformed",
+      "severity": "error",
+      "message": "The row on line 32 of the results file has 3 cells but the header has 7; the row was left out.",
+      "file": "examples/bad/results.csv",
+      "line": 32,
+      "column": 1,
+      "at": "examples/bad/results.csv:32",
+      "subject": null,
+      "fix": "Put a cell with a comma, a tab or a line end inside double quotes, and give every row one cell for each column of the header.",
+      "kind": "record"
+    },
+    {
+      "id": "cell-missing",
+      "severity": "error",
+      "message": "The row on line 33 of the results file has no value under \"verdict\", which every row needs; the row was left out.",
+      "file": "examples/bad/results.csv",
+      "line": 33,
+      "column": 9,
+      "at": "examples/bad/results.csv:33",
+      "subject": "verdict",
+      "fix": "Fill the cell. A part that was not inspected has no row; it does not get an empty verdict.",
+      "kind": "record"
+    },
+    {
+      "id": "verdict-invalid",
+      "severity": "error",
+      "message": "The verdict of the part \"B-G02\" is \"maybe\", which is not pass or fail; the row was left out.",
+      "file": "examples/bad/results.csv",
+      "line": 34,
+      "column": 9,
+      "at": "examples/bad/results.csv:34",
+      "subject": "B-G02",
+      "fix": "Write pass or fail. A reject, a rework and a hold are a fail; put the reason in defect_type.",
+      "kind": "record"
+    },
+    {
+      "id": "run-invalid",
+      "severity": "error",
+      "message": "The run of the part \"B-G03\" is \"two\", which is not a whole number from 1 to 9,999,999; the row was left out.",
+      "file": "examples/bad/results.csv",
+      "line": 35,
+      "column": 7,
+      "at": "examples/bad/results.csv:35",
+      "subject": "B-G03",
+      "fix": "Number the runs of a part 1, 2, 3 and so on.",
+      "kind": "record"
+    },
+    {
+      "id": "label-without-result",
+      "severity": "error",
+      "message": "The part \"B-D11\" is labelled defect but has no usable row in the results file, so it is in no rate.",
+      "file": "examples/bad/labels.csv",
+      "line": 22,
+      "column": 1,
+      "at": "examples/bad/labels.csv:22",
+      "subject": "B-D11",
+      "fix": "Add the result of the station for the part, or take the label out if the part was never inspected.",
+      "kind": "part"
+    },
+    {
+      "id": "label-duplicate",
+      "severity": "error",
+      "message": "The part \"B-D02\" is labelled again by the labeler \"inspector-a\"; the row on line 13 already labels it. The later row was left out.",
+      "file": "examples/bad/labels.csv",
+      "line": 24,
+      "column": 1,
+      "at": "examples/bad/labels.csv:24",
+      "subject": "B-D02",
+      "fix": "Keep one row for each part and labeler. Two different labelers may label the same part; give each their name in labeler.",
+      "kind": "part"
+    },
+    {
+      "id": "run-sequence",
+      "severity": "error",
+      "message": "The run numbers of the part \"B-D05\" do not go from 1 to n: the runs of the part are 1 and 3, and run 2 is missing (runs go from 1 to the number of runs without a gap).",
+      "file": "examples/bad/results.csv",
+      "line": 47,
+      "column": 1,
+      "at": "examples/bad/results.csv:47",
+      "subject": "B-D05",
+      "fix": "Number the runs of each part 1 to n once each. If a run was repeated by mistake, take the extra row out.",
+      "kind": "part"
+    },
+    {
+      "id": "run-sequence",
+      "severity": "error",
+      "message": "The run numbers of the part \"B-D04\" do not go from 1 to n: run 2 is on line 46 and again on line 67, and the later row was left out.",
+      "file": "examples/bad/results.csv",
+      "line": 67,
+      "column": 1,
+      "at": "examples/bad/results.csv:67",
+      "subject": "B-D04",
+      "fix": "Number the runs of each part 1 to n once each. If a run was repeated by mistake, take the extra row out.",
+      "kind": "part"
+    },
+    {
+      "id": "result-without-label",
+      "severity": "error",
+      "message": "The part \"B-Z99\" has 1 row in the results file and no label in the labels file, so it is in no rate.",
+      "file": "examples/bad/results.csv",
+      "line": 68,
+      "column": 1,
+      "at": "examples/bad/results.csv:68",
+      "subject": "B-Z99",
+      "fix": "Label the part, or take its rows out of the results file. Check that the part ids are written the same way in both files.",
+      "kind": "part"
+    },
+    {
+      "id": "escape-above-limit",
+      "severity": "error",
+      "message": "The escape rate is 28.57 percent per run (8 of 28 runs of defect parts passed), 30.00 percent by majority verdict (3 of 10 defect parts); the limit is 2 percent and the rate is above it per run and by majority verdict.",
+      "file": null,
+      "line": null,
+      "column": null,
+      "at": "rates",
+      "subject": null,
+      "fix": "Look at the defect parts the station passed, and the threshold or the lighting that let them through. Raise the limit only if the line can accept that rate.",
+      "kind": "metric"
+    },
+    {
+      "id": "false-reject-above-limit",
+      "severity": "error",
+      "message": "The false reject rate is 26.67 percent per run (8 of 30 runs of good parts failed), 30.00 percent by majority verdict (3 of 10 good parts); the limit is 5 percent and the rate is above it per run and by majority verdict.",
+      "file": null,
+      "line": null,
+      "column": null,
+      "at": "rates",
+      "subject": null,
+      "fix": "Look at the good parts the station failed, and the threshold that rejects them. Raise the limit only if the line can accept the scrap and rework.",
+      "kind": "metric"
+    },
+    {
+      "id": "repeatability-below-limit",
+      "severity": "error",
+      "message": "Repeatability is 65.00 percent (13 of 20 parts with more than one run gave the same verdict every time); the minimum is 95 percent. 7 parts had runs that disagreed.",
+      "file": null,
+      "line": null,
+      "column": null,
+      "at": "rates",
+      "subject": null,
+      "fix": "Look at the parts listed in the report where the runs disagreed: part position, lighting, a score close to the threshold. Run the same parts again after a change.",
+      "kind": "metric"
+    },
+    {
+      "id": "column-missing",
+      "severity": "warning",
+      "message": "The results file has no \"defect_type\" column, so the confusion matrix cannot name what the station reported; a failed run of a defect part counts as \"(not named)\".",
+      "file": "examples/bad/results.csv",
+      "line": 1,
+      "column": 1,
+      "at": "examples/bad/results.csv:1",
+      "subject": "defect_type",
+      "fix": "Add the column if the station or the labelers have the information (docs/inputs.md), or leave it out on purpose and accept what the warning says is lost.",
+      "kind": "file"
+    },
+    {
+      "id": "defect-type-missing",
+      "severity": "warning",
+      "message": "The part \"B-D09\" is labelled defect and has no defect type, so it is counted in the escape rate but in no defect type.",
+      "file": "examples/bad/labels.csv",
+      "line": 20,
+      "column": 14,
+      "at": "examples/bad/labels.csv:20",
+      "subject": "B-D09",
+      "fix": "Give the defect a type, or accept that it has none.",
+      "kind": "record"
+    },
+    {
+      "id": "label-conflict",
+      "severity": "warning",
+      "message": "The labelers of the part \"B-D03\" disagree: inspector-a says defect (dent) on line 14, inspector-b says good on line 25 and inspector-c says defect (dent) on line 26. The majority label is defect, with the type dent.",
+      "file": "examples/bad/labels.csv",
+      "line": 14,
+      "column": 1,
+      "at": "examples/bad/labels.csv:14",
+      "subject": "B-D03",
+      "fix": "Look at the part again with both labelers and settle the label. The rates depend on it.",
+      "kind": "part"
+    },
+    {
+      "id": "label-conflict",
+      "severity": "warning",
+      "message": "The labelers of the part \"B-D12\" disagree: inspector-a says defect (burr) on line 23 and inspector-b says good on line 27. The votes tie, so the part is left out of every rate.",
+      "file": "examples/bad/labels.csv",
+      "line": 23,
+      "column": 1,
+      "at": "examples/bad/labels.csv:23",
+      "subject": "B-D12",
+      "fix": "Look at the part again with both labelers and settle the label. The rates depend on it.",
+      "kind": "part"
+    },
+    {
+      "id": "sample-small",
+      "severity": "warning",
+      "message": "Only 10 defect parts (at least 30 asked for) and 10 good parts (at least 30 asked for) were measured. Rates on so few parts mislead: one defect part is 10.00 percent of the defect parts and one good part is 10.00 percent of the good parts, so one part moves a rate by that much, and no escape among a handful of defect parts does not show that the escape rate is low. Measure more parts before accepting the station on these numbers.",
+      "file": null,
+      "line": null,
+      "column": null,
+      "at": "rates",
+      "subject": null,
+      "fix": "Measure more parts before accepting a station on these numbers, or lower the minimum if the sample is small on purpose and say so.",
+      "kind": "metric"
+    }
+  ],
+  "notes": [
+    "1 part was left out of every rate because the labelers tied on good or defect",
+    "1 result row was left out because a run number was used twice for a part"
+  ],
+  "notice": "This report is arithmetic on the labels and the results in the two files. It never looks at an image. The numbers are only as good as the labels and the sample. It does not replace a formal measurement system analysis or gauge study, and it is not a certification.",
+  "result": {
+    "pass": false,
+    "failOn": "error",
+    "text": "FAIL - 22 findings at or above error (22 error, 5 warning)"
+  }
+}

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="vision-qc-report" tests="3" failures="0" errors="0" time="0">
+  <testsuite name="acceptance" tests="3" failures="0" errors="0" skipped="0" time="0">
+    <testcase classname="acceptance" name="escape rate at most 2 percent" time="0"/>
+    <testcase classname="acceptance" name="false reject rate at most 5 percent" time="0"/>
+    <testcase classname="acceptance" name="repeatability at least 95 percent" time="0"/>
+  </testsuite>
+</testsuites>

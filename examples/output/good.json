@@ -1,0 +1,496 @@
+{
+  "tool": "vision-qc-report",
+  "version": "1.0.0",
+  "input": {
+    "labels": {
+      "file": "examples/good/labels.csv",
+      "format": "CSV",
+      "bytes": 3023,
+      "lines": 88,
+      "records": 87,
+      "leftOut": 0
+    },
+    "results": {
+      "file": "examples/good/results.csv",
+      "format": "CSV",
+      "bytes": 7798,
+      "lines": 241,
+      "records": 240,
+      "leftOut": 0
+    }
+  },
+  "evaluated": true,
+  "summary": {
+    "labelled": {
+      "parts": 80,
+      "good": 40,
+      "defect": 40,
+      "undecided": 0,
+      "duplicateRows": 0
+    },
+    "results": {
+      "parts": 80,
+      "rowsKept": 240,
+      "rowsLeftOut": 0,
+      "unlabelled": 0
+    },
+    "measured": {
+      "parts": 80,
+      "good": 40,
+      "defect": 40,
+      "runs": 240
+    }
+  },
+  "rates": {
+    "escape": {
+      "perRun": {
+        "count": 1,
+        "of": 120,
+        "percent": "0.83"
+      },
+      "majority": {
+        "count": 0,
+        "of": 40,
+        "percent": "0.00"
+      },
+      "tied": 0
+    },
+    "falseReject": {
+      "perRun": {
+        "count": 2,
+        "of": 120,
+        "percent": "1.67"
+      },
+      "majority": {
+        "count": 0,
+        "of": 40,
+        "percent": "0.00"
+      },
+      "tied": 0
+    },
+    "repeatability": {
+      "parts": 80,
+      "consistent": 77,
+      "disagreeing": 3,
+      "rate": {
+        "count": 77,
+        "of": 80,
+        "percent": "96.25"
+      }
+    }
+  },
+  "types": [
+    {
+      "type": "burr",
+      "parts": 9,
+      "runs": 27,
+      "detected": {
+        "count": 27,
+        "of": 27,
+        "percent": "100.00"
+      },
+      "named": {
+        "count": 25,
+        "of": 27,
+        "percent": "92.59"
+      }
+    },
+    {
+      "type": "dent",
+      "parts": 10,
+      "runs": 30,
+      "detected": {
+        "count": 29,
+        "of": 30,
+        "percent": "96.67"
+      },
+      "named": {
+        "count": 27,
+        "of": 30,
+        "percent": "90.00"
+      }
+    },
+    {
+      "type": "missing-hole",
+      "parts": 9,
+      "runs": 27,
+      "detected": {
+        "count": 27,
+        "of": 27,
+        "percent": "100.00"
+      },
+      "named": {
+        "count": 26,
+        "of": 27,
+        "percent": "96.30"
+      }
+    },
+    {
+      "type": "scratch",
+      "parts": 12,
+      "runs": 36,
+      "detected": {
+        "count": 36,
+        "of": 36,
+        "percent": "100.00"
+      },
+      "named": {
+        "count": 34,
+        "of": 36,
+        "percent": "94.44"
+      }
+    }
+  ],
+  "matrix": {
+    "columns": [
+      "burr",
+      "dent",
+      "missing-hole",
+      "scratch",
+      "(not named)",
+      "passed"
+    ],
+    "rows": [
+      {
+        "type": "burr",
+        "counts": [
+          25,
+          1,
+          0,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "type": "dent",
+        "counts": [
+          0,
+          27,
+          0,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "type": "missing-hole",
+        "counts": [
+          1,
+          0,
+          26,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "type": "scratch",
+        "counts": [
+          1,
+          1,
+          0,
+          34,
+          0,
+          0
+        ]
+      },
+      {
+        "type": "(good part)",
+        "counts": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          118
+        ]
+      }
+    ]
+  },
+  "disagreements": {
+    "listed": [
+      {
+        "part": "BRK-G012",
+        "label": "good",
+        "type": null,
+        "line": 35,
+        "runs": [
+          {
+            "run": 1,
+            "verdict": "fail",
+            "line": 35
+          },
+          {
+            "run": 2,
+            "verdict": "pass",
+            "line": 36
+          },
+          {
+            "run": 3,
+            "verdict": "pass",
+            "line": 37
+          }
+        ]
+      },
+      {
+        "part": "BRK-G031",
+        "label": "good",
+        "type": null,
+        "line": 92,
+        "runs": [
+          {
+            "run": 1,
+            "verdict": "pass",
+            "line": 92
+          },
+          {
+            "run": 2,
+            "verdict": "pass",
+            "line": 93
+          },
+          {
+            "run": 3,
+            "verdict": "fail",
+            "line": 94
+          }
+        ]
+      },
+      {
+        "part": "BRK-D017",
+        "label": "defect",
+        "type": "dent",
+        "line": 170,
+        "runs": [
+          {
+            "run": 1,
+            "verdict": "fail",
+            "line": 170
+          },
+          {
+            "run": 2,
+            "verdict": "pass",
+            "line": 171
+          },
+          {
+            "run": 3,
+            "verdict": "fail",
+            "line": 172
+          }
+        ]
+      }
+    ],
+    "notListed": 0
+  },
+  "stations": [
+    {
+      "station": "cell-1",
+      "escape": {
+        "count": 1,
+        "of": 60,
+        "percent": "1.67"
+      },
+      "falseReject": {
+        "count": 1,
+        "of": 60,
+        "percent": "1.67"
+      }
+    },
+    {
+      "station": "cell-2",
+      "escape": {
+        "count": 0,
+        "of": 60,
+        "percent": "0.00"
+      },
+      "falseReject": {
+        "count": 1,
+        "of": 60,
+        "percent": "1.67"
+      }
+    }
+  ],
+  "sweep": null,
+  "acceptance": [
+    {
+      "check": "escape-above-limit",
+      "name": "escape rate at most 2 percent",
+      "status": "pass",
+      "detail": "0.83 percent per run (1 of 120 runs of defect parts passed), 0.00 percent by majority verdict (0 of 40 defect parts)"
+    },
+    {
+      "check": "false-reject-above-limit",
+      "name": "false reject rate at most 5 percent",
+      "status": "pass",
+      "detail": "1.67 percent per run (2 of 120 runs of good parts failed), 0.00 percent by majority verdict (0 of 40 good parts)"
+    },
+    {
+      "check": "repeatability-below-limit",
+      "name": "repeatability at least 95 percent",
+      "status": "pass",
+      "detail": "96.25 percent (77 of 80 parts with more than one run gave the same verdict every time)"
+    }
+  ],
+  "totals": {
+    "findings": 0,
+    "byLevel": {
+      "error": 0,
+      "warning": 0,
+      "info": 0
+    },
+    "hidden": 0
+  },
+  "rules": [
+    {
+      "id": "file-unreadable",
+      "level": "error",
+      "kind": "file",
+      "findings": 0
+    },
+    {
+      "id": "column-missing",
+      "level": "warning",
+      "kind": "file",
+      "findings": 0
+    },
+    {
+      "id": "column-unknown",
+      "level": "error",
+      "kind": "file",
+      "findings": 0
+    },
+    {
+      "id": "column-duplicate",
+      "level": "error",
+      "kind": "file",
+      "findings": 0
+    },
+    {
+      "id": "row-malformed",
+      "level": "error",
+      "kind": "record",
+      "findings": 0
+    },
+    {
+      "id": "cell-missing",
+      "level": "error",
+      "kind": "record",
+      "findings": 0
+    },
+    {
+      "id": "label-invalid",
+      "level": "error",
+      "kind": "record",
+      "findings": 0
+    },
+    {
+      "id": "verdict-invalid",
+      "level": "error",
+      "kind": "record",
+      "findings": 0
+    },
+    {
+      "id": "run-invalid",
+      "level": "error",
+      "kind": "record",
+      "findings": 0
+    },
+    {
+      "id": "score-invalid",
+      "level": "error",
+      "kind": "record",
+      "findings": 0
+    },
+    {
+      "id": "secret-in-file",
+      "level": "error",
+      "kind": "record",
+      "findings": 0
+    },
+    {
+      "id": "defect-type-on-good",
+      "level": "error",
+      "kind": "record",
+      "findings": 0
+    },
+    {
+      "id": "defect-type-missing",
+      "level": "warning",
+      "kind": "record",
+      "findings": 0
+    },
+    {
+      "id": "label-duplicate",
+      "level": "error",
+      "kind": "part",
+      "findings": 0
+    },
+    {
+      "id": "label-conflict",
+      "level": "warning",
+      "kind": "part",
+      "findings": 0
+    },
+    {
+      "id": "run-sequence",
+      "level": "error",
+      "kind": "part",
+      "findings": 0
+    },
+    {
+      "id": "result-without-label",
+      "level": "error",
+      "kind": "part",
+      "findings": 0
+    },
+    {
+      "id": "label-without-result",
+      "level": "error",
+      "kind": "part",
+      "findings": 0
+    },
+    {
+      "id": "escape-above-limit",
+      "level": "error",
+      "kind": "metric",
+      "findings": 0
+    },
+    {
+      "id": "false-reject-above-limit",
+      "level": "error",
+      "kind": "metric",
+      "findings": 0
+    },
+    {
+      "id": "repeatability-below-limit",
+      "level": "error",
+      "kind": "metric",
+      "findings": 0
+    },
+    {
+      "id": "sample-small",
+      "level": "warning",
+      "kind": "metric",
+      "findings": 0
+    }
+  ],
+  "options": {
+    "minSeverity": "info",
+    "failOn": "error",
+    "maxEscape": "2",
+    "maxFalseReject": "5",
+    "minRepeatability": "95",
+    "minDefects": 30,
+    "minGood": 30,
+    "thresholdSweep": false,
+    "scoreDirection": "high"
+  },
+  "findings": [],
+  "notes": [],
+  "notice": "This report is arithmetic on the labels and the results in the two files. It never looks at an image. The numbers are only as good as the labels and the sample. It does not replace a formal measurement system analysis or gauge study, and it is not a certification.",
+  "result": {
+    "pass": true,
+    "failOn": "error",
+    "text": "PASS - no finding at or above error"
+  }
+}

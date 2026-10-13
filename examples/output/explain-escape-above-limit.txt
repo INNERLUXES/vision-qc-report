@@ -1,0 +1,14 @@
+escape-above-limit
+
+level: error
+kind: metric
+
+what it looks at: the escape rate (defect parts the station passed over all defect parts), per run or by the majority verdict, is above --max-escape (default 2 percent), or cannot be measured because no defect part has a result; compared exactly
+
+why it exists: Failing a run on the escape rate is a best practice of this tool; no standard sets it; a defect that passes reaches the customer, and it is the rate an acceptance usually asks for first
+
+what to change: Look at the defect parts the station passed, and the threshold or the lighting that let them through. Raise the limit only if the line can accept that rate.
+
+what it cannot see: It counts the parts in the files. It does not know how many defects the line makes, what an escape costs, or whether the defect parts are the ones the line produces.
+
+This check is a best practice of this tool; no standard sets it. The tool is arithmetic on the pass and fail results of a station and the labels of the same parts, read from two tables and never from an image; the numbers are only as good as the labels and the sample, it does not replace a formal measurement system analysis or gauge study, and it is not a certification.
